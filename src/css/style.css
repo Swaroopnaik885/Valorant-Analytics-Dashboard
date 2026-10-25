@@ -1,0 +1,162 @@
+/* ==========================================================================
+   VANTA — design tokens, reset and base typography
+   Colour values are taken from the Figma exports (01–09).
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Surfaces */
+  --bg: #0B0D12;
+  --sidebar: #10131A;
+  --elevated: #12151D;
+  --card: #181C26;
+  --border: #292E3A;
+
+  /* Text */
+  --text: #F5F5F7;
+  --muted: #9298A5;
+  --muted-2: #687080;
+
+  /* Accents / status */
+  --accent-red: #ff4655;
+  --accent-cyan: #36CFC9;
+  --accent-blue: #7C9CFF;
+  --success: #55D69E;
+  --failed: #FF647C;
+
+  /* Component surfaces */
+  --nav-active: #29212A;
+  --avatar-bg: #3A2830;
+  --bar: #424958;
+  --win-tile: #1D302C;
+  --loss-tile: #332128;
+  --win-panel: #1B2927;
+  --loss-panel: #29212A;
+  --callout: #202B30;
+  --weapon-art: #252A36;
+  --weapon-line: #AEB5C4;
+
+  /* Typography scale (Figma: 28 / 18 / 12 / 9 plus intermediate sizes) */
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --heading: clamp(22px, 1.2vw + 14px, 28px);
+  --semibold: 700;
+  --sectitle: 18px;
+  --body: 12px;
+  --regular: 500;
+  --caption: 9px;
+  --fs-kpi: clamp(22px, 0.8vw + 14px, 28px);
+  --fs-card-title: 14px;
+  --fs-nav: 13px;
+  --fs-sub: 10px;
+
+  /* Shape + layout */
+  --radius: 8px;
+  --radius-sm: 6px;
+  --sidebar-w: 224px;
+  --gutter: clamp(16px, 2vw, 32px);
+  --content-max: 1680px;
+  --gap: clamp(12px, 1.2vw, 18px);
+  --topbar-h: 68px;
+  --tap: 40px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--body);
+  font-weight: var(--regular);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body.is-locked {
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, p, figure, ul, ol, dl, dd {
+  margin: 0;
+}
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 8px 12px;
+  background: var(--accent-red);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,304 @@
+/* ==========================================================================
+   Responsive rules. Layouts are fluid by default (grid + clamp); these
+   queries only change structure where content genuinely needs it.
+   ========================================================================== */
+
+/* Large screens: let the content breathe a little more */
+@media (min-width: 1920px) {
+  :root {
+    --fs-nav: 14px;
+    --body: 13px;
+  }
+}
+
+/* ---- Laptop / small desktop: three-column chart row becomes two + one ---- */
+@media (max-width: 1279px) {
+  .grid-overview-charts {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .grid-overview-charts > :first-child {
+    grid-column: 1 / -1;
+  }
+
+  .grid-overview-bottom {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .row--history {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr) minmax(0, 1fr) 48px 48px 60px auto;
+  }
+
+  .row--history .row__date {
+    display: none;
+  }
+}
+
+/* ---- Tablet and below: sidebar becomes a drawer, top bar appears ---- */
+@media (max-width: 1023px) {
+  .app {
+    display: block;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: var(--topbar-h);
+    padding: 0 18px;
+    background: var(--sidebar);
+  }
+
+  .topbar__left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .topbar__menu {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-left: -10px;
+    background: none;
+    border: 0;
+    border-radius: 6px;
+    color: var(--text);
+  }
+
+  .topbar__menu svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .topbar__brand {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .topbar .avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 10px;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 50;
+    width: min(280px, 86vw);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.22s ease, visibility 0s linear 0.22s;
+    box-shadow: 8px 0 32px rgb(0 0 0 / 0.5);
+  }
+
+  .sidebar.is-open {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.22s ease;
+  }
+
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: block;
+    background: rgb(5 6 9 / 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .scrim.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav__link {
+    min-height: 44px;
+  }
+
+  .main {
+    padding-top: 18px;
+  }
+
+  .grid-2,
+  .grid-2--wide-left,
+  .grid-match-charts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .grid-kpi--8 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .setting {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .setting > :first-child {
+    grid-column: 1 / -1;
+  }
+
+  /* History rows become two-line cards */
+  .row--history {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+  }
+
+  .row--history .row__main { grid-column: 1; }
+  .row--history .row__agent { grid-column: 1; }
+  .row--history .row__kda,
+  .row--history .row__acs,
+  .row--history .row__meta,
+  .row--history .row__date { display: none; }
+  .row--history .row__summary { display: flex; grid-column: 1 / -1; }
+  .row--history .btn { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+/* ---- Large mobile ---- */
+@media (max-width: 767px) {
+  .grid-overview-charts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .row--recent {
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+  }
+
+  .row--recent .row__acs,
+  .row--recent .row__meta { display: none; }
+
+  .setting {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bar-row {
+    grid-template-columns: minmax(0, 1fr) 40px;
+  }
+
+  .bar-row .track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .bar-row__pct { grid-row: 1; grid-column: 2; }
+
+  .mini-rows > li {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .mini-rows > li > :nth-child(4) {
+    display: none;
+  }
+}
+
+/* ---- Mobile (Figma frame 05) ---- */
+@media (max-width: 599px) {
+  .hero {
+    display: none;
+  }
+
+  .page-sub--long {
+    display: none;
+  }
+
+  .page-sub--short {
+    display: block;
+  }
+
+  .grid-kpi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-kpi > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .kpi {
+    min-height: 81px;
+    gap: 8px;
+  }
+
+  .kpi__delta {
+    display: none;
+  }
+
+  .chip__select,
+  .chip__btn {
+    min-width: 0;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .stack {
+    margin-top: 16px;
+  }
+
+  .toolbar .search {
+    max-width: none;
+    flex-basis: 100%;
+  }
+
+  .dialog__actions .btn {
+    flex: 1;
+  }
+}
+
+/* ---- Very small phones ---- */
+@media (max-width: 359px) {
+  .grid-kpi,
+  .grid-kpi--8 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .topbar {
+    padding: 0 12px;
+  }
+
+  .main {
+    padding-inline: 12px;
+  }
+}
+
+/* ---- Touch devices: bigger hit targets ---- */
+@media (pointer: coarse) {
+  .chip__select,
+  .chip__btn,
+  .search__input {
+    min-height: var(--tap);
+  }
+
+  .btn {
+    min-height: var(--tap);
+  }
+
+  .tile {
+    min-height: 52px;
+  }
+
+  .nav__link {
+    min-height: 44px;
+  }
+}
+
+@media (min-width: 600px) {
+  .page-sub--short {
+    display: none;
+  }
+}
+
+@media (min-width: 2200px) {
+  :root {
+    --content-max: 1880px;
+  }
+}
