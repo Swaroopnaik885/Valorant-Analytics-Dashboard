@@ -12,7 +12,6 @@ const MIN_HS_KILLS = 10;
 const local = { category: 'all' };
 export const enter = () => { local.category = 'all'; };
 
-// Chips come from the whole dataset so they don't vanish when other filters change.
 const availableCategories = CATEGORY_ORDER.filter((c) => byWeapon(allMatches).some((w) => w.category === c));
 
 export function render(root) {

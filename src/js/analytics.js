@@ -1,9 +1,3 @@
-/*
- * Pure metric functions. Every number on screen is computed here from match
- * records, so KPIs, charts and lists can never drift out of sync.
- * `ms` is always an array of matches, newest first.
- */
-
 export const sum = (arr, fn) => arr.reduce((total, item) => total + fn(item), 0);
 export const mean = (arr, fn) => (arr.length ? sum(arr, fn) / arr.length : 0);
 const safeDiv = (a, b) => (b ? a / b : 0);
@@ -30,17 +24,12 @@ export function summarize(ms) {
   };
 }
 
-/**
- * "vs earlier": compares the newer half of the matches with the older half.
- * Returns null when there are too few matches for a fair comparison.
- */
 export function splitDelta(ms, metric) {
   if (ms.length < 4) return null;
   const cut = Math.ceil(ms.length / 2);
   return metric(ms.slice(0, cut)) - metric(ms.slice(cut));
 }
 
-/** Current streak from the newest match: { type: 'win' | 'loss', length } */
 export function streak(ms) {
   if (!ms.length) return { type: 'win', length: 0 };
   const type = ms[0].result;
@@ -52,7 +41,6 @@ export function streak(ms) {
   return { type, length };
 }
 
-/** Agent breakdown, sorted by win rate then matches. */
 export function byAgent(ms) {
   const map = new Map();
   for (const m of ms) {
@@ -70,7 +58,6 @@ export function byAgent(ms) {
     .sort((a, b) => b.winRate - a.winRate || b.matches - a.matches || a.agent.localeCompare(b.agent));
 }
 
-/** Map breakdown including attack/defense round win rates. */
 export function byMap(ms) {
   const map = new Map();
   for (const m of ms) {
@@ -88,7 +75,6 @@ export function byMap(ms) {
     .sort((a, b) => b.winRate - a.winRate || b.matches - a.matches || a.map.localeCompare(b.map));
 }
 
-/** Weapon breakdown from each match's weapon_breakdown. */
 export function byWeapon(ms) {
   const map = new Map();
   for (const m of ms) {
@@ -106,7 +92,6 @@ export function byWeapon(ms) {
     .sort((a, b) => b.kills - a.kills || a.weapon.localeCompare(b.weapon));
 }
 
-/** Overall attack / defence round win rates for a set of matches. */
 export function sideRates(ms) {
   const t = { atkWon: 0, atkTotal: 0, defWon: 0, defTotal: 0 };
   for (const m of ms) {
@@ -118,7 +103,6 @@ export function sideRates(ms) {
   return { atk: safeDiv(t.atkWon, t.atkTotal), def: safeDiv(t.defWon, t.defTotal), atkTotal: t.atkTotal, defTotal: t.defTotal };
 }
 
-/** How rounds ended, as shares of all rounds played. */
 export function roundOutcomes(ms) {
   const rounds = ms.flatMap((m) => m.rounds);
   const total = rounds.length;
@@ -132,7 +116,6 @@ export function roundOutcomes(ms) {
   return { total, rows: rows.map((r) => ({ ...r, share: safeDiv(r.n, total) })) };
 }
 
-/** Rounds per site (A / Mid / B) for the schematic. */
 export function siteStats(ms) {
   const out = { A: { n: 0, won: 0 }, Mid: { n: 0, won: 0 }, B: { n: 0, won: 0 } };
   for (const m of ms) {
@@ -146,7 +129,6 @@ export function siteStats(ms) {
   return out;
 }
 
-/** Best entry by a numeric key, ignoring samples smaller than `min`. Falls back to any sample. */
 export function bestBy(list, key, min = 2, sizeKey = 'matches') {
   const pool = list.filter((x) => x[sizeKey] >= min);
   const source = pool.length ? pool : list;

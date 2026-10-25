@@ -1,7 +1,3 @@
-/*
- * Hash router + sidebar/drawer behaviour.
- * Routes: #/overview, #/history, #/analytics, #/agents, #/weapons, #/maps, #/settings, #/match/<id>
- */
 import { subscribe, getProfile } from './filters.js';
 import { currentRank } from './data.js';
 import { initials } from './utils.js';
@@ -35,7 +31,6 @@ function parseHash() {
   return { key: ROUTES[key] ? key : 'overview', params };
 }
 
-/** Render the page for the current URL. `keepScroll` is used when only a filter changed. */
 function render({ keepScroll = false } = {}) {
   const { key, params } = parseHash();
   const route = ROUTES[key];
@@ -69,7 +64,7 @@ function render({ keepScroll = false } = {}) {
     if (focusId) document.getElementById(focusId)?.focus({ preventScroll: true });
   } else {
     window.scrollTo(0, 0);
-    // Move focus to the new page heading so keyboard + screen-reader users know the view changed.
+
     page.querySelector('#page-title')?.focus({ preventScroll: true });
   }
 }
@@ -81,7 +76,6 @@ function updateNav(active) {
   });
 }
 
-/** Fill the sidebar + top bar player info. */
 export function paintPlayer() {
   const p = getProfile();
   const rank = currentRank();
@@ -90,7 +84,6 @@ export function paintPlayer() {
   document.querySelectorAll('[data-player-rank]').forEach((el) => { el.textContent = rank.tier; });
 }
 
-/* ---------- Mobile drawer ---------- */
 function initDrawer() {
   const sidebar = document.getElementById('sidebar');
   const scrim = document.getElementById('scrim');
@@ -99,7 +92,6 @@ function initDrawer() {
 
   const isOpen = () => sidebar.classList.contains('is-open');
 
-  // On narrow screens the closed drawer must not be reachable by keyboard.
   const syncInert = () => { sidebar.inert = mq.matches && !isOpen(); };
 
   function setOpen(open) {
@@ -107,7 +99,7 @@ function initDrawer() {
     scrim.classList.toggle('is-open', open);
     document.body.classList.toggle('is-locked', open && mq.matches);
     button.setAttribute('aria-expanded', String(open));
-    syncInert(); // must happen before focusing: inert elements cannot take focus
+    syncInert();
     if (open) sidebar.querySelector('.nav__link[aria-current="page"], .nav__link')?.focus();
     else if (mq.matches) button.focus();
   }
@@ -120,7 +112,6 @@ function initDrawer() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) setOpen(false); });
   sidebar.addEventListener('click', (e) => { if (e.target.closest('a') && mq.matches) setOpen(false); });
 
-  // Keep Tab inside the open drawer.
   sidebar.addEventListener('keydown', (e) => {
     if (e.key !== 'Tab' || !isOpen()) return;
     const items = [...sidebar.querySelectorAll('a[href]')];

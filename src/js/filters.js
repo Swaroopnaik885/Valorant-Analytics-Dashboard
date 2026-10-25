@@ -1,8 +1,3 @@
-/*
- * Global filter + preference state.
- * - `filters` (mode, range) drive every page and are shared by the header chips.
- * - `prefs` are the saved defaults + profile edits (localStorage, guarded by try/catch).
- */
 import { baseProfile } from './data.js';
 
 const KEY = 'vanta:prefs:v1';
@@ -52,7 +47,6 @@ export function setFilters(patch) {
   notify();
 }
 
-/** Save preferences. Changing the default mode/range also applies it right away. */
 export function setPrefs(patch) {
   prefs = { ...prefs, ...patch };
   const saved = persist(prefs);
@@ -63,7 +57,7 @@ export function setPrefs(patch) {
 
 export function resetPrefs() {
   prefs = { ...DEFAULT_PREFS };
-  try { localStorage.removeItem(KEY); } catch { /* storage unavailable: in-memory reset is enough */ }
+  try { localStorage.removeItem(KEY); } catch {  }
   filters = { mode: prefs.mode, range: prefs.range };
   notify();
 }

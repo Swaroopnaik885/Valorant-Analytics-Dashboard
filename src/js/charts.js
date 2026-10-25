@@ -1,8 +1,3 @@
-/*
- * Chart.js wrapper. Only the pieces we use are registered (tree-shakeable).
- * Every factory destroys any chart already attached to the canvas first, so
- * re-rendering a page never leaves duplicate instances behind.
- */
 import {
   Chart,
   BarController,
@@ -21,7 +16,6 @@ Chart.register(BarController, BarElement, LineController, LineElement, PointElem
 const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** Colours come from the CSS design tokens so charts and UI stay in sync. */
 export function palette() {
   return {
     text: css('--text'),
@@ -86,13 +80,12 @@ function baseOptions({ yFormat, yMin, yMax, stacked = false, legend = false, int
 
 function mount(canvas, config) {
   if (!canvas) return null;
-  // Pages that re-render themselves replace their canvases; drop charts left on detached ones.
+
   Object.values(Chart.instances).forEach((chart) => { if (!chart.canvas?.isConnected) chart.destroy(); });
   Chart.getChart(canvas)?.destroy();
   return new Chart(canvas, config);
 }
 
-/** Tooltip title/body from per-point callbacks. */
 function tooltipFrom({ titles, lines }) {
   return {
     callbacks: {
@@ -102,7 +95,6 @@ function tooltipFrom({ titles, lines }) {
   };
 }
 
-/** Single-series bars. `colors` is one colour or an array per bar. */
 export function barChart(canvas, { labels, values, colors, yFormat, yMax, titles, lines, onClick, maxXTicks }) {
   const p = palette();
   const options = baseOptions({ yFormat, yMax, maxXTicks });
@@ -129,7 +121,6 @@ export function barChart(canvas, { labels, values, colors, yFormat, yMax, titles
   });
 }
 
-/** Bars plus a dashed reference line (e.g. win rate per agent vs overall). */
 export function barWithLine(canvas, { labels, values, colors, lineValue, lineLabel, yFormat, yMax, titles, lines, onClick }) {
   const p = palette();
   const options = baseOptions({ yFormat, yMax });
@@ -157,7 +148,6 @@ export function barWithLine(canvas, { labels, values, colors, lineValue, lineLab
   });
 }
 
-/** Dot plots (no connecting line), one or more series. */
 export function dotChart(canvas, { labels, datasets, yFormat, yMin, yMax, titles, lines, legend = false, maxXTicks }) {
   const options = baseOptions({ yFormat, yMin, yMax, legend, interaction: 'nearest', maxXTicks });
   options.interaction = { mode: 'index', intersect: false };
@@ -181,7 +171,6 @@ export function dotChart(canvas, { labels, datasets, yFormat, yMin, yMax, titles
   });
 }
 
-/** Kills (up) and deaths (down) per round. */
 export function killDeathChart(canvas, { labels, kills, deaths, titles, lines }) {
   const p = palette();
   const options = baseOptions({ stacked: true, legend: true, yFormat: (v) => Math.abs(v), maxXTicks: 24 });
@@ -203,7 +192,6 @@ export function destroyAllCharts() {
   Object.values(Chart.instances).forEach((chart) => chart.destroy());
 }
 
-// Re-measure text once the web font has loaded so tick labels use Inter.
 if (document.fonts?.ready) {
   document.fonts.ready.then(() => Object.values(Chart.instances).forEach((c) => c.update('none')));
 }

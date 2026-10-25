@@ -81,7 +81,6 @@ export function render(root) {
   root.querySelector('#s-mode').addEventListener('change', (e) => { setPrefs({ mode: e.target.value }); toast('Default game mode saved'); });
   root.querySelector('#reset-prefs').addEventListener('click', () => { resetPrefs(); toast('Preferences reset to defaults'); });
 
-  // --- Edit profile dialog ---
   const dialog = root.querySelector('#profile-dialog');
   const form = root.querySelector('#profile-form');
   const error = root.querySelector('#dlg-error');
@@ -90,7 +89,7 @@ export function render(root) {
   opener.addEventListener('click', () => { error.textContent = ''; dialog.showModal(); form.elements.name.focus(); });
   root.querySelector('#dlg-cancel').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => opener.focus());
-  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); }); // click on backdrop
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();

@@ -120,7 +120,6 @@ export function render(root) {
 function drawCharts(chrono) {
   const p = palette();
 
-  // Cumulative win rate after each match, coloured by that match's result.
   let wins = 0;
   const cumulative = chrono.map((m, i) => {
     wins += m.win ? 1 : 0;

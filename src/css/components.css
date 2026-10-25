@@ -1,8 +1,3 @@
-/* ==========================================================================
-   Components
-   ========================================================================== */
-
-/* ---------- Card ---------- */
 .card {
   min-width: 0;
   padding: 16px;
@@ -42,7 +37,6 @@
   text-transform: uppercase;
 }
 
-/* ---------- KPI ---------- */
 .kpi {
   display: flex;
   flex-direction: column;
@@ -73,7 +67,6 @@
 .is-flat { color: var(--accent-cyan); }
 .is-muted { color: var(--muted); }
 
-/* ---------- Select chips, buttons ---------- */
 .chip {
   position: relative;
   display: inline-flex;
@@ -223,7 +216,6 @@
   pointer-events: none;
 }
 
-/* ---------- Charts ---------- */
 .chart-card {
   display: flex;
   flex-direction: column;
@@ -275,7 +267,6 @@
   vertical-align: baseline;
 }
 
-/* ---------- Insight panel (Overview) ---------- */
 .stat-block + .stat-block {
   margin-top: 16px;
   padding-top: 16px;
@@ -319,7 +310,6 @@
   line-height: 1.5;
 }
 
-/* ---------- Result list rows (Overview + History) ---------- */
 .rows > li {
   border-bottom: 1px solid var(--border);
 }
@@ -441,7 +431,6 @@ a.row:hover {
   min-height: 28px;
 }
 
-/* ---------- Empty / error states ---------- */
 .empty {
   display: grid;
   justify-items: center;
@@ -461,7 +450,6 @@ a.row:hover {
   padding: 24px 8px;
 }
 
-/* ---------- Agent / weapon cards ---------- */
 .entity-card {
   display: block;
   width: 100%;
@@ -598,7 +586,6 @@ button.entity-card[aria-pressed='true'] {
   height: 4px;
 }
 
-/* Compact list rows inside cards (analytics page) */
 .mini-rows > li {
   display: grid;
   grid-template-columns: auto minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
@@ -670,7 +657,6 @@ button.entity-card[aria-pressed='true'] {
 
 .strong-line.cyan { color: var(--accent-cyan); }
 
-/* ---------- Maps & rounds ---------- */
 .schematic {
   display: flex;
   flex-wrap: wrap;
@@ -740,7 +726,6 @@ button.entity-card[aria-pressed='true'] {
   border-radius: 4px;
 }
 
-/* ---------- Match details ---------- */
 .outcome {
   display: flex;
   flex-wrap: wrap;
@@ -813,7 +798,6 @@ button.entity-card[aria-pressed='true'] {
 
 .round-detail strong { color: var(--text); }
 
-/* ---------- Settings ---------- */
 .profile-card {
   display: flex;
   flex-wrap: wrap;
@@ -909,7 +893,6 @@ select.value-box {
   background-position: right 10px center;
 }
 
-/* ---------- Dialog ---------- */
 .dialog {
   width: min(420px, calc(100vw - 32px));
   padding: 0;
@@ -972,7 +955,6 @@ select.value-box {
 
 .dialog__actions .btn { min-height: 34px; }
 
-/* ---------- Toast ---------- */
 .toast {
   position: fixed;
   right: 16px;

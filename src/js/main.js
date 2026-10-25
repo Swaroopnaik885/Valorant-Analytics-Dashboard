@@ -1,7 +1,57 @@
-/*
- * Vanta — Valorant Match Analytics Dashboard
- * Entry point. Styles are linked from index.html; this file boots the router.
- */
 import { initRouter } from './navigation.js';
+
+const app = document.querySelector("#app")
+
+app.innerHTML = `
+<a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="topbar">
+      <div class="topbar__left">
+        <button type="button" class="topbar__menu" id="menu-button" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+        <span class="topbar__brand">VANTA</span>
+      </div>
+      <span class="avatar" aria-hidden="true" data-player-initials></span>
+    </header>
+    <div class="scrim" id="scrim" aria-hidden="true"></div>
+
+    <div class="app">
+      <aside class="sidebar" id="sidebar" aria-label="Primary">
+        <div>
+          <div class="brand">
+            <div class="brand__row">
+              <span class="brand__accent" aria-hidden="true"></span>
+              <span class="brand__name">VANTA</span>
+            </div>
+            <p class="brand__tag">Competitive Intelligence</p>
+          </div>
+
+          <nav class="nav" aria-label="Main">
+            <a class="nav__link" href="#/overview" data-nav="overview">Overview</a>
+            <a class="nav__link" href="#/history" data-nav="history">Match History</a>
+            <a class="nav__link" href="#/analytics" data-nav="analytics">Performance Analytics</a>
+            <a class="nav__link" href="#/agents" data-nav="agents">Agent Statistics</a>
+            <a class="nav__link" href="#/weapons" data-nav="weapons">Weapon Analytics</a>
+            <a class="nav__link" href="#/maps" data-nav="maps">Maps &amp; Rounds</a>
+            <div class="nav__divider" role="separator"></div>
+            <a class="nav__link" href="#/settings" data-nav="settings">Settings</a>
+          </nav>
+        </div>
+
+        <div class="sidebar__bottom">
+          <div class="profile-chip">
+            <span class="avatar" aria-hidden="true" data-player-initials></span>
+            <div class="profile-chip__text">
+              <p class="profile-chip__name" data-player-name></p>
+              <p class="profile-chip__rank" data-player-rank></p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main" id="main" tabindex="-1"></main>
+    </div>
+`
 
 initRouter();

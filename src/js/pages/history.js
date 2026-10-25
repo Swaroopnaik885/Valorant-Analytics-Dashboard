@@ -12,7 +12,6 @@ const sorters = {
   rr: (a, b) => b.rank.rr_change - a.rank.rr_change || b.ts - a.ts,
 };
 
-// Page-local state survives global-filter re-renders (but resets on a fresh visit via `reset`).
 const local = { result: 'all', map: 'all', agent: 'all', search: '', sort: 'recent', visible: PAGE_SIZE };
 
 export function resetLocal() {
@@ -101,7 +100,7 @@ export function render(root) {
         const alreadyAll = f.mode === 'all' && f.range === 'all';
         resetLocal();
         setFilters({ mode: 'all', range: 'all' });
-        if (alreadyAll) render(root); // no filter change event fires, so repaint explicitly
+        if (alreadyAll) render(root);
       });
       return;
     }
@@ -116,7 +115,7 @@ export function render(root) {
     listEl.querySelector('#load-more')?.addEventListener('click', () => {
       local.visible += PAGE_SIZE;
       paint();
-      // Keep keyboard users in the list: focus the first newly added row's button.
+
       listEl.querySelectorAll('.rows > li')[shown.length]?.querySelector('a')?.focus();
     });
   }
@@ -131,5 +130,4 @@ export function render(root) {
   paint();
 }
 
-/** Called by the router when the user navigates here (not on filter re-renders). */
 export const enter = resetLocal;

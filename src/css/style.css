@@ -1,8 +1,3 @@
-/* ==========================================================================
-   VANTA — design tokens, reset and base typography
-   Colour values are taken from the Figma exports (01–09).
-   ========================================================================== */
-
 *,
 *::before,
 *::after {
@@ -10,26 +5,22 @@
 }
 
 :root {
-  /* Surfaces */
   --bg: #0B0D12;
   --sidebar: #10131A;
   --elevated: #12151D;
   --card: #181C26;
   --border: #292E3A;
 
-  /* Text */
   --text: #F5F5F7;
   --muted: #9298A5;
   --muted-2: #687080;
 
-  /* Accents / status */
   --accent-red: #ff4655;
   --accent-cyan: #36CFC9;
   --accent-blue: #7C9CFF;
   --success: #55D69E;
   --failed: #FF647C;
 
-  /* Component surfaces */
   --nav-active: #29212A;
   --avatar-bg: #3A2830;
   --bar: #424958;
@@ -41,7 +32,6 @@
   --weapon-art: #252A36;
   --weapon-line: #AEB5C4;
 
-  /* Typography scale (Figma: 28 / 18 / 12 / 9 plus intermediate sizes) */
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --heading: clamp(22px, 1.2vw + 14px, 28px);
   --semibold: 700;
@@ -54,7 +44,6 @@
   --fs-nav: 13px;
   --fs-sub: 10px;
 
-  /* Shape + layout */
   --radius: 8px;
   --radius-sm: 6px;
   --sidebar-w: 224px;

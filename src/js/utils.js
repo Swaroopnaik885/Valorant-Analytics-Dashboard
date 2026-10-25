@@ -1,8 +1,5 @@
-/* Small shared helpers: escaping, formatting, tiny inline icons. */
-
 const ENTITIES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 
-/** Escape any value before putting it into an HTML template. */
 export const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ENTITIES[c]);
 
 export const pct = (fraction, digits = 1) => `${(fraction * 100).toFixed(digits)}%`;
@@ -11,13 +8,11 @@ export const signed = (value, suffix = '') => `${value > 0 ? '+' : value < 0 ? '
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-/** "2026-10-23 13:26" -> "Oct 23" */
 export function shortDate(local) {
   const [, m, d] = local.slice(0, 10).split('-').map(Number);
   return `${MONTHS[m - 1]} ${d}`;
 }
 
-/** "2026-10-23 13:26" -> "Oct 23, 2026" */
 export function longDate(local) {
   const [y, m, d] = local.slice(0, 10).split('-').map(Number);
   return `${MONTHS[m - 1]} ${d}, ${y}`;
@@ -31,7 +26,7 @@ export const ICONS = {
 };
 
 let toastTimer;
-/** Brief status message (announced to screen readers via role="status"). */
+
 export function toast(message) {
   let el = document.getElementById('toast');
   if (!el) {

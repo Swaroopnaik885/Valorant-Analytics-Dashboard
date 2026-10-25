@@ -1,4 +1,3 @@
-/* Shared UI builders used by several pages (header, KPI card, chart card, states). */
 import { esc, ICONS } from './utils.js';
 import { MODES, RANGES } from './data.js';
 import { getFilters, setFilters } from './filters.js';
@@ -12,7 +11,6 @@ export const optionList = (entries, selected) =>
 export const modeOptions = (selected) => optionList(Object.entries(MODES), selected);
 export const rangeOptions = (selected) => optionList(Object.entries(RANGES).map(([k, v]) => [k, v.label]), selected);
 
-/** Page header with the two global filter chips (mode + date range). */
 export function pageHeader({ title, subtitle, subtitleShort, crumbs = ['Vanta', 'Analytics'] }) {
   const f = getFilters();
   return `
@@ -32,7 +30,6 @@ export function pageHeader({ title, subtitle, subtitleShort, crumbs = ['Vanta', 
     </header>`;
 }
 
-/** Wire every `[data-filter]` select inside `root` to the global filter state. */
 export function bindFilters(root) {
   root.querySelectorAll('select[data-filter]').forEach((select) => {
     select.addEventListener('change', () => setFilters({ [select.dataset.filter]: select.value }));
@@ -48,7 +45,6 @@ export function kpi({ label, value, delta }) {
     </div>`;
 }
 
-/** Delta between the newer and older half of `ms` for a metric function. */
 export function deltaInfo(ms, metric, { scale = 1, digits = 2, unit = '', label = 'vs earlier' } = {}) {
   const d = splitDelta(ms, metric);
   if (d === null) return { text: `– ${label}`, cls: 'is-muted' };
@@ -77,7 +73,6 @@ export function emptyState({ title = 'No matches found', text, actions = '' }) {
     </div>`;
 }
 
-/** "Show everything" action used by empty states. */
 export const showAllButton = '<button type="button" class="btn" data-action="show-all">Show all matches</button>';
 
 export function bindEmptyActions(root) {
@@ -86,7 +81,6 @@ export function bindEmptyActions(root) {
 
 export const searchIcon = ICONS.search;
 
-/** Role tints for agent tokens/portraits (taken from the Figma agent cards). */
 const ROLE_TINT = {
   Duelist: { bg: '#38272F', fg: 'var(--accent-red)' },
   Controller: { bg: '#202D3A', fg: 'var(--accent-cyan)' },

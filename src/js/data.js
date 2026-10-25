@@ -1,11 +1,5 @@
-/*
- * Data layer. Everything the UI shows is derived from src/data/matches.json
- * (synthetic demo data — not a Riot Games account).
- * A real source can be plugged in by replacing `raw` with a fetch + the same shape.
- */
 import raw from '../data/matches.json';
 
-/** "2026-10-23 13:26" -> epoch ms (local wall-clock treated as UTC so comparisons are stable). */
 function parseLocal(str) {
   const [date, time] = str.split(' ');
   const [y, m, d] = date.split('-').map(Number);
@@ -16,7 +10,6 @@ function parseLocal(str) {
 export const dataset = raw;
 export const DISCLAIMER = raw.player_profile.disclaimer;
 
-/** All matches, newest first, with a few convenience fields. */
 export const allMatches = raw.match_history.matches
   .map((m) => ({
     ...m,
@@ -28,7 +21,6 @@ export const allMatches = raw.match_history.matches
   }))
   .sort((a, b) => b.ts - a.ts);
 
-/** Demo "today": the dataset's own generation time, so ranges stay stable. */
 export const REFERENCE_TS = parseLocal(raw.generated_at.slice(0, 16).replace('T', ' '));
 
 export const MODES = { Competitive: 'Competitive', Unrated: 'Unrated', all: 'All modes' };
@@ -52,7 +44,6 @@ export const AGENT_NAMES = raw.match_history.filter_options.agents;
 
 const DAY = 86_400_000;
 
-/** Matches (newest first) that pass the global mode + range filters. */
 export function getMatches({ mode, range }) {
   const days = RANGES[range]?.days ?? null;
   return allMatches.filter((m) => {
@@ -64,7 +55,6 @@ export function getMatches({ mode, range }) {
 
 export const getMatch = (id) => allMatches.find((m) => m.match_id === id) ?? null;
 
-/** Current rank taken from the most recent match. */
 export function currentRank() {
   const latest = allMatches[0];
   return {
